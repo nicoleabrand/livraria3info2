@@ -1,6 +1,7 @@
 from email.mime import base
 from django.contrib import admin
 from django.urls import include, path
+from django.conf.locale import ro
 from drf_spectacular.views import (
     SpectacularAPIView,
     SpectacularRedocView,
@@ -11,6 +12,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from uploader.router import router as uploader_router
 from core.views import AutorViewSet, CategoriaViewSet, EditoraViewSet, LivroViewSet, UserViewSet
+from uploader.views import ImageUploadViewSet
 router = DefaultRouter()
 
 router.register(r'autores', AutorViewSet, basename='autores')
@@ -18,6 +20,7 @@ router.register(r'categorias', CategoriaViewSet, basename='categorias')
 router.register(r"editoras", EditoraViewSet, basename='editoras')
 router.register(r'livros', LivroViewSet, basename='livros')
 router.register(r'usuarios', UserViewSet, basename='usuarios')
+router.register(r'upload', ImageUploadViewSet, basename='upload')
 
 
 urlpatterns = [
