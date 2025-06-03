@@ -5,9 +5,8 @@ Django admin customization.
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext_lazy as _
-from core.models import Autor, Categoria, Editora, Livro, User
 
-from core import models
+from core.models import Autor, Categoria, Editora, Livro, User
 
 
 class UserAdmin(BaseUserAdmin):
@@ -17,7 +16,7 @@ class UserAdmin(BaseUserAdmin):
     list_display = ['email', 'name']
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        (_('Personal Info'), {'fields': ('name', 'passage_id')}),
+        (_('Personal Info'), {'fields': ('name', 'passage_id',)}),
         (
             _('Permissions'),
             {
@@ -51,12 +50,14 @@ class UserAdmin(BaseUserAdmin):
         ),
     )
 
-class UserAdmin(BaseUserAdmin):
+
+@admin.register(User)
+class UserAdmin(UserAdmin):
     ordering = ['id']
     list_display = ['email', 'name']
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        (_('Personal Info'), {'fields': ('name', 'passage_id')}),
+        (_('Personal Info'), {'fields': ('name', 'passage_id', 'foto',)}),
         (
             _('Permissions'),
             {
@@ -82,6 +83,7 @@ class UserAdmin(BaseUserAdmin):
                     'password1',
                     'password2',
                     'name',
+                    'foto',
                     'is_active',
                     'is_staff',
                     'is_superuser',
@@ -89,6 +91,7 @@ class UserAdmin(BaseUserAdmin):
             },
         ),
     )
+
 
 @admin.register(Autor)
 class AutorAdmin(admin.ModelAdmin):
@@ -98,6 +101,7 @@ class AutorAdmin(admin.ModelAdmin):
     ordering = ('nome', 'email')
     list_per_page = 10
 
+
 @admin.register(Categoria)
 class CategoriaAdmin(admin.ModelAdmin):
     list_display = ('descricao',)
@@ -106,6 +110,7 @@ class CategoriaAdmin(admin.ModelAdmin):
     ordering = ('descricao',)
     list_per_page = 10
 
+
 @admin.register(Editora)
 class EditoraAdmin(admin.ModelAdmin):
     list_display = ('nome', 'email', 'cidade')
@@ -113,6 +118,7 @@ class EditoraAdmin(admin.ModelAdmin):
     list_filter = ('nome', 'email', 'cidade')
     ordering = ('nome', 'email', 'cidade')
     list_per_page = 10
+
 
 @admin.register(Livro)
 class LivroAdmin(admin.ModelAdmin):

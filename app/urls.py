@@ -1,18 +1,18 @@
-from email.mime import base
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
-from django.conf.locale import ro
 from drf_spectacular.views import (
     SpectacularAPIView,
     SpectacularRedocView,
     SpectacularSwaggerView,
 )
 from rest_framework.routers import DefaultRouter
-from django.conf import settings
-from django.conf.urls.static import static
-from uploader.router import router as uploader_router
+
 from core.views import AutorViewSet, CategoriaViewSet, EditoraViewSet, LivroViewSet, UserViewSet
+from uploader.router import router as uploader_router
 from uploader.views import ImageUploadViewSet
+
 router = DefaultRouter()
 
 router.register(r'autores', AutorViewSet, basename='autores')
@@ -39,7 +39,7 @@ urlpatterns = [
     ),
     # API
     path('api/', include(router.urls)),
-    path("api/media/", include(uploader_router.urls)), 
+    path("api/media/", include(uploader_router.urls)),
 ]
 
 urlpatterns += static(settings.MEDIA_ENDPOINT, document_root=settings.MEDIA_ROOT)
